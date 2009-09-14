@@ -2,6 +2,8 @@ class Post < ActiveRecord::Base
   include User::Editable
   
   formats_attributes :body
+  
+  named_scope :from_forums, lambda {|forums| { :conditions => ["posts.forum_id IN (?)", forums]}}
 
   # author of post
   belongs_to :user, :counter_cache => true

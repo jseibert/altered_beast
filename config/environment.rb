@@ -23,6 +23,8 @@ Rails::Initializer.run do |config|
 
   config.gem 'RedCloth', :lib => "redcloth",
     :source => "http://code.whytheluckystiff.net"
+    
+  config.gem "authlogic"
 
   # Skip frameworks you're not going to use (only works if using vendor/rails).
   # To use Rails without a database, you must remove the Active Record framework
@@ -44,9 +46,12 @@ Rails::Initializer.run do |config|
   # If you change this key, all old sessions will become invalid!
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
+  require 'yaml'
+  db = YAML.load_file('config/database.yml')
   config.action_controller.session = {
-    :session_key => '_altered_beast_session',
-    :secret      => 'f471415647be47dc513d5e345ca4e582a8f99f388e0ccd46a2cdac51e2cd27c8e8b4d7dbba379cf661d4857afaf6b1867489bbc5e16b5fb14d2c3e53df64c272'
+    :domain => db[RAILS_ENV]['session_domain'],
+    :session_key => db[RAILS_ENV]['session_key'],
+    :secret      => db[RAILS_ENV]['secret']
   }
 
   # Use the database for sessions instead of the cookie-based default,

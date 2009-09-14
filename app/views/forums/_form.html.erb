@@ -9,6 +9,11 @@
     <%= form.text_field :name, :class => "primary" %>
   </td>
   <td style="text-align:right">
+    <label><%= I18n.t 'txt.views_forums.group', :default => 'Group' %></label><br />
+    <%= collection_select(:forum, :role_id, Role.all, :id, :name, {:include_blank => true}) %>
+
+  </td>
+  <td style="text-align:right">
     <label><%= I18n.t 'txt.views_forums.position', :default => 'Position' %></label><br />
     <%= form.text_field :position, :size => 5 %>
 

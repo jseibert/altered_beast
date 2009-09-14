@@ -15,14 +15,17 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :posts, :collection => {:search => :get}
+  map.resources :password_resets
   map.resources :users, :member => { :suspend   => :put,
                                      :settings  => :get,
                                      :make_admin => :put,
                                      :unsuspend => :put,
                                      :purge     => :delete },
                         :has_many => [:posts]
+                        
+  map.reset_password '/reset', :controller => 'users', :action => 'reset'
 
-  map.activate '/activate/:activation_code', :controller => 'users',    :action => 'activate', :activation_code => nil
+  map.activate '/activate/:perishable_token', :controller => 'users',    :action => 'activate', :perishable_token => nil
   map.signup   '/signup',                    :controller => 'users',    :action => 'new'
   map.login    '/login',                     :controller => 'sessions', :action => 'new'
   map.logout   '/logout',                    :controller => 'sessions', :action => 'destroy'

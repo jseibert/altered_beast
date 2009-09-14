@@ -5,7 +5,7 @@
   <title><%=h @current_site && current_site.name || I18n.t('txt.beast_title', :default => 'Altered Beast') %><%= " - #{h @page_title}" if @page_title %></title>
   <%= stylesheet_link_tag 'display' %>
   <%= stylesheet_link_tag 'captcha' %>
-  <%= javascript_include_tag "prototype", "effects", "lowpro", "time", "application", :cache => "beast" %>
+  <%= javascript_include_tag "prototype", "effects", "lowpro", "application", :cache => "beast" %>
 <% unless @feed_icons.blank? -%>
   <% @feed_icons.each do |feed| -%>
   <%= auto_discovery_link_tag :atom, feed[:url], :title => "Subscribe to '#{feed[:title]}'" %>
@@ -31,8 +31,8 @@
     <li class="logout"><%= link_to I18n.t('txt.settings', :default => 'Settings'), settings_path %></li>
     <li class="logout"><%= link_to I18n.t('txt.logout', :default => 'Logout'), logout_path(:to => CGI.escape(request.request_uri)) %></li>
     <% else -%>
-    <li><%= link_to I18n.t('txt.signup', :default => 'Signup'), signup_path(:to => CGI.escape(request.request_uri)) %></li>
-    <li><%= link_to I18n.t('txt.login', :default => 'Login'), login_path(:to => CGI.escape(request.request_uri)) %></li>
+    <li class="login"><%= link_to I18n.t('txt.signup', :default => 'Signup'), signup_path(:to => CGI.escape(request.request_uri)) %></li>
+    <li class="login"><%= link_to I18n.t('txt.login', :default => 'Login'), login_path(:to => CGI.escape(request.request_uri)) %></li>
     <% end -%>
   </ul>
   <% name = (site = @current_site || Site.first) && site.name %>

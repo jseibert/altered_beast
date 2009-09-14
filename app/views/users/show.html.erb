@@ -11,7 +11,7 @@
     <p><%= I18n.t 'txt.admin.remove_moderated_forum', :default => 'This user can moderate the following forums. Click one to remove.' %></p>
 
     <ul class="flat">
-    <% @user.forums.moderatable.each do |forum| -%>
+    <% @user.mod_forums.moderatable.each do |forum| -%>
       <li>
         <%= link_to forum.name, moderatorship_path(forum.moderatorship_id), :method => :delete, :confirm => I18n.t('txt.admin.remove_user_as_moderator', :default => 'Remove user as moderator for {{forum}}?', :forum => forum.name) %>
       </li>

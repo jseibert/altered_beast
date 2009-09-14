@@ -12,7 +12,7 @@
 <% form_for :topic,
      :url  => forum_topics_path(@forum) do |f| -%>
 <%= render :partial => "form", :object => f %>
-<%= submit_tag I18n.t('txt.post_topic', :default => 'Post topic') %>
+<%= submit_tag I18n.t('txt.post_topic', :default => 'Post topic') %> or <%= link_to "Cancel", forum_path(@forum), :style => 'font-size: smaller;' %>
 <% end -%>
 
 <%= javascript_tag "$('topic_title').focus();" %>

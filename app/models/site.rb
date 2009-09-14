@@ -4,9 +4,11 @@ class Site < ActiveRecord::Base
   has_many :users, :conditions => {:state => 'active'}
   has_many :all_users, :class_name => 'User'
   
-  has_many :forums
-  has_many :topics, :through => :forums
-  has_many :posts,  :through => :forums
+  has_many :public_forums, :conditions => "forums.role_id is NULL", :class_name => 'Forum'
+  has_many :topics, :through => :public_forums
+  has_many :posts,  :through => :public_forums
+  
+  has_many :all_forums, :class_name => 'Forum'
   
   validates_presence_of   :name
   validates_uniqueness_of :host
@@ -30,9 +32,9 @@ class Site < ActiveRecord::Base
     sites.reject { |s| s.default? }.first || sites.first
   end
   
-  # <3 rspec
-  def ordered_forums(*args)
-    forums.ordered(*args)
+  def forums(user=nil)
+    return public_forums.ordered if !user
+    user.forums
   end
   
   def default?

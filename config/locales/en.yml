@@ -132,9 +132,12 @@
       zero: "no posts found"
       one: "1 post found"
       other: "{{count}} posts found"
-
+    footer_message: "Hang out. Relax. SlouchBack."
     views_users:
-      email_directions: Enter your email, and a brand new login key will be sent to you.  Click the link in the email to log in, and then change your password.
-      reset_password: Reset password
+      email_directions: "Enter your email, and a brand new login key will be sent to you.  Click the link in the email to log in, and then change your password."
+      reset_password: "Forgot your password?"
+    sidebar:
+      beast_title: "Welcome to the SlouchBack Nation!"
+      beast_desc: "You've heard the legends. This place is real. Welcome, and enjoy!"
       
       

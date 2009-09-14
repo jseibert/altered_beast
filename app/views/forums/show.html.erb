@@ -1,7 +1,8 @@
 <% content_for :right do %>
 
 <% unless @forum.description.blank? %>
-<%= @forum.description %>
+<h5 style="margin-bottom:1.0em;"><%= @forum.name %></h5>
+<p><%= @forum.description %></p>
 <hr />
 <% end %>
 
@@ -14,7 +15,7 @@
 <% end -%>
 </ul>
 <% else -%>
-<p><%= I18n.t 'txt.views_forums.unmoderated', :default => 'This forum is currently unmoderated.<br />Please always be courteous.' %></p>
+<p><%= I18n.t 'txt.views_forums.unmoderated', :default => 'This forum is currently unmoderated.<br /><br />Please always be courteous.' %></p>
 <% end -%>
 
 <% end %>
@@ -24,20 +25,23 @@
 <div class="crumbs">
 <%= link_to I18n.t('txt.forums', :default => 'Forums'), root_path %> <span class="arrow">&rarr;</span>
 </div>
-<h1 style="margin-top:0.5em"><%= h @forum.name %></h1>
 
-<p class="subtitle">
+<% if @topics.total_entries -%>
+<% if logged_in? %>
+<p style="float:right; margin-top: 1.5em; margin-bottom: 0;"><%= link_to I18n.t('txt.new_topic', :default => 'New topic'), new_forum_topic_path(@forum), :class => "utility" %></p>
+<% else %>
+<%= link_to I18n.t('txt.login', :default => 'Login'), login_path(:to => CGI.escape(request.request_uri)), :class => 'utility', :style => 'float: right; margin-top: 1.5em;' %>
+<% end %>
+<%= will_paginate @topics %>
+<% end -%>
+
+<h1 style="margin-top: 0.5em; margin-bottom: 0px;"><%= h @forum.name %></h1>
+
+<p class="subtitle" style="float: left; margin-top: 2px;">
   <%= feed_icon_tag @forum.name, forum_posts_path(@forum, :format => :atom) %> 
   <%= I18n.t 'txt.count_topics', :count => @forum.topics.size, :num => number_with_delimiter(@forum.topics.size) %>,
   <%= I18n.t 'txt.count_posts', :count => @forum.posts.size, :num => number_with_delimiter(@forum.posts.size) %>
 </p>
-
-<% if @topics.total_entries -%>
-<% if logged_in? %>
-<p style="float:right; margin-top:0;"><%= link_to I18n.t('txt.new_topic', :default => 'New topic'), new_forum_topic_path(@forum), :class => "utility" %></p>
-<% end %>
-<%= will_paginate @topics %>
-<% end -%>
 
 <table border="0" cellspacing="0" cellpadding="0" class="wide topics">
 <tr>
@@ -88,5 +92,5 @@
 <%= will_paginate @topics %>
 
 <% if logged_in? %>
-  <p><%= link_to I18n.t('txt.new_topic', :default => 'New topic'), new_forum_topic_path(@forum), :class => "utility" %></p>
+  <p style="float: right; margin-bottom: 0px;"><%= link_to I18n.t('txt.new_topic', :default => 'New topic'), new_forum_topic_path(@forum), :class => "utility" %></p>
 <% end%>

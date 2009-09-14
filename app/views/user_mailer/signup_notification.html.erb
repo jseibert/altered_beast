@@ -1,8 +1,14 @@
-Your account has been created.
+Welcome to the <%= @user.site.name %>!
+
+Your account has been created with the following information:
 
   Username: <%= @user.login %>
-  Password: <%= @user.password %>
+  Password: <hidden>
 
 Visit this url to activate your account:
 
   <%= @url %>
+  
+Thanks!
+
+  - The <%= @user.site.name %> Team

@@ -6,6 +6,7 @@ class Forum < ActiveRecord::Base
   validates_presence_of :name
   
   belongs_to :site
+  belongs_to :role
   
   has_permalink :name
   
@@ -25,10 +26,15 @@ class Forum < ActiveRecord::Base
 
   has_many :moderatorships, :dependent => :delete_all
   has_many :moderators, :through => :moderatorships, :source => :user
+  
+  named_scope :for_site, lambda {|s| { :conditions => {:site_id => s.id}}}
+  named_scope :for_user, lambda {|u| { :conditions => ["forums.role_id is NULL OR forums.role_id IN (?)", u.role_ids]}}
+  named_scope :for_public, lambda {|s| { :conditions => "forums.role_id IS NULL" }}
 
   # oh has_finder i eagerly await thee
-  def self.ordered
-    find :all, :order => 'position'
+  def self.ordered(options={})
+    defaults = {:order => 'position'}
+    find :all, defaults.merge(options)
   end
   
   def to_param

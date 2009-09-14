@@ -12,15 +12,15 @@ module AuthenticatedSystem
 
     # Accesses the current user from the session.
     # Future calls avoid the database because nil is not equal to false.
-    def current_user
-      @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) unless @current_user == false
-    end
-
-    # Store the given user id in the session.
-    def current_user=(new_user)
-      session[:user_id] = new_user ? new_user.id : nil
-      @current_user = new_user || false
-    end
+    # def current_user
+    #   @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) unless @current_user == false
+    # end
+    # 
+    # # Store the given user id in the session.
+    # def current_user=(new_user)
+    #   session[:user_id] = new_user ? new_user.id : nil
+    #   @current_user = new_user || false
+    # end
 
     def admin?
       logged_in? && current_user.admin?
@@ -55,19 +55,16 @@ module AuthenticatedSystem
     #
     # To require logins for all actions, use this in your controllers:
     #
-    #   before_filter :login_required
+    #   before_filter :require_user
     #
     # To require logins for specific actions, use this in your controllers:
     #
-    #   before_filter :login_required, :only => [ :edit, :update ]
+    #   before_filter :require_user, :only => [ :edit, :update ]
     #
     # To skip this in a subclassed controller:
     #
-    #   skip_before_filter :login_required
+    #   skip_before_filter :require_user
     #
-    def login_required
-      authorized? || access_denied
-    end
 
     def admin_required
       admin? || access_denied

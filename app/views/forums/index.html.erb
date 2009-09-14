@@ -1,9 +1,8 @@
 <% content_for :right do %>
 
-<h5><%= I18n.t 'txt.sidebar.beast_title', :default => 'What is Beast?' %></h5>
+<h5 style="margin-bottom: 0;"><%= I18n.t 'txt.sidebar.beast_title', :default => 'What is Beast?' %></h5>
 
-<p>
-  <%= I18n.t 'txt.sidebar.beast_desc', :default => "A small, light-weight forum in Rails with a scary name and a goal of around 500 lines of code when we're done." %>
+<p><%= I18n.t 'txt.sidebar.beast_desc', :default => "A small, light-weight forum in Rails with a scary name and a goal of around 500 lines of code when we're done." %>
 </p>
 
 <% if admin? %>
@@ -12,6 +11,8 @@
 <% end %>
 
 <% end %>
+
+<%= link_to I18n.t('txt.login', :default => 'Login'), login_path(:to => CGI.escape(request.request_uri)), :class => 'utility', :style => 'float: right; margin-top: 1.5em;' if !logged_in? %>
 
 <h1 style="margin-top:0;"><%= I18n.t 'txt.forums', :default => 'Forums' %></h1>
 <p class="subtitle">
@@ -41,7 +42,7 @@
         <%= I18n.t 'txt.count_topics', :count => forum.topics.size, :num => number_with_delimiter(forum.topics.size) %>,
         <%= I18n.t 'txt.count_posts', :count => forum.posts.size, :num => number_with_delimiter(forum.posts.size) %>
       </div>
-      <p class="desc"><%= forum.description_html %></p>
+      <p class="desc"><%= forum.description %></p>
     </td>
     <td class="c3">
       <%= link_to I18n.t('txt.edit', :default => 'Edit'), edit_forum_path(forum), :class => "tiny", :rel => "directory", :style => "float:right" if admin? %>
@@ -59,7 +60,8 @@
 </table>
 
 <p>
-  <%= link_to I18n.t('txt.show_recent_posts', :default => 'Show recent posts'), posts_path %>
+  <%= link_to I18n.t('txt.show_recent_posts', :default => 'Show recent posts'), posts_path, :class => 'utility' %>
+  <%= link_to I18n.t('txt.login', :default => 'Login'), login_path(:to => CGI.escape(request.request_uri)), :class => 'utility', :style => 'float: right;' if !logged_in? %>
 </p>
 
 <%# TODO: online_users = User.currently_online -%>
